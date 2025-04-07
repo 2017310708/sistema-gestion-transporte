@@ -20,71 +20,77 @@
         <form action="{{ route('admin.vehicles.update', $vehicle) }}" method="POST" class="mt-8 space-y-6">
             @csrf
             @method('PUT')
-            <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
-                <div class="md:grid md:grid-cols-2 md:gap-6">
-                    <div class="mt-5 md:mt-0">
-                        <div class="grid grid-cols-6 gap-6">
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="placa" class="block text-sm font-medium text-gray-700">Placa</label>
-                                <input type="text" name="placa" id="placa" value="{{ old('placa', $vehicle->placa) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                @error('placa')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
 
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="marca" class="block text-sm font-medium text-gray-700">Marca</label>
-                                <input type="text" name="marca" id="marca" value="{{ old('marca', $vehicle->marca) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                @error('marca')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
+            <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <div class="grid grid-cols-1 gap-6">
+                        <div class="col-span-1">
+                            <label for="placa" class="block text-sm font-medium text-gray-700">Placa</label>
+                            <input type="text" name="placa" id="placa" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ old('placa', $vehicle->placa) }}" required>
+                            @error('placa')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="modelo" class="block text-sm font-medium text-gray-700">Modelo</label>
-                                <input type="text" name="modelo" id="modelo" value="{{ old('modelo', $vehicle->modelo) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                @error('modelo')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
+                        <div class="col-span-1">
+                            <label for="marca" class="block text-sm font-medium text-gray-700">Marca</label>
+                            <input type="text" name="marca" id="marca" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ old('marca', $vehicle->marca) }}" required>
+                            @error('marca')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="año" class="block text-sm font-medium text-gray-700">Año</label>
-                                <input type="number" name="año" id="año" value="{{ old('año', $vehicle->año) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                @error('año')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
+                        <div class="col-span-1">
+                            <label for="modelo" class="block text-sm font-medium text-gray-700">Modelo</label>
+                            <input type="text" name="modelo" id="modelo" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ old('modelo', $vehicle->modelo) }}" required>
+                            @error('modelo')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="capacidad" class="block text-sm font-medium text-gray-700">Capacidad (toneladas)</label>
-                                <input type="number" step="0.1" name="capacidad" id="capacidad" value="{{ old('capacidad', $vehicle->capacidad) }}" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                @error('capacidad')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
+                        <div class="col-span-1">
+                            <label for="anio" class="block text-sm font-medium text-gray-700">Año</label>
+                            <input type="number" name="anio" id="anio" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ old('anio', $vehicle->anio) }}" required>
+                            @error('anio')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                            <div class="col-span-6 sm:col-span-3">
-                                <label for="estado" class="block text-sm font-medium text-gray-700">Estado</label>
-                                <select name="estado" id="estado" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                    <option value="activo" {{ old('estado', $vehicle->estado) == 'activo' ? 'selected' : '' }}>Activo</option>
-                                    <option value="mantenimiento" {{ old('estado', $vehicle->estado) == 'mantenimiento' ? 'selected' : '' }}>En Mantenimiento</option>
-                                    <option value="inactivo" {{ old('estado', $vehicle->estado) == 'inactivo' ? 'selected' : '' }}>Inactivo</option>
-                                </select>
-                                @error('estado')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
+                        <div class="col-span-1">
+                            <label for="capacidad" class="block text-sm font-medium text-gray-700">Capacidad (kg)</label>
+                            <input type="number" name="capacidad" id="capacidad" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ old('capacidad', $vehicle->capacidad) }}" required>
+                            @error('capacidad')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="col-span-1">
+                            <label for="estado" class="block text-sm font-medium text-gray-700">Estado</label>
+                            <select name="estado" id="estado" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                                <option value="activo" {{ old('estado', $vehicle->estado) == 'activo' ? 'selected' : '' }}>Activo</option>
+                                <option value="mantenimiento" {{ old('estado', $vehicle->estado) == 'mantenimiento' ? 'selected' : '' }}>En Mantenimiento</option>
+                                <option value="inactivo" {{ old('estado', $vehicle->estado) == 'inactivo' ? 'selected' : '' }}>Inactivo</option>
+                            </select>
+                            @error('estado')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="col-span-1">
+                            <label for="observaciones" class="block text-sm font-medium text-gray-700">Observaciones</label>
+                            <textarea name="observaciones" id="observaciones" rows="3" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">{{ old('observaciones', $vehicle->observaciones) }}</textarea>
+                            @error('observaciones')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="flex justify-end">
-                <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <i class="fas fa-save mr-2"></i>
-                    Actualizar Vehículo
-                </button>
+                <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <i class="fas fa-save mr-2"></i>
+                        Guardar Cambios
+                    </button>
+                </div>
             </div>
         </form>
     </div>

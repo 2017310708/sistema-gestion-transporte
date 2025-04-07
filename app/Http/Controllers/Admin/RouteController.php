@@ -12,13 +12,15 @@ class RouteController extends Controller
 {
     public function index()
     {
-        $routes = Route::with(['driver', 'vehicle'])->get();
+        $routes = Route::with(['driver.user', 'vehicle'])->get();
         return view('admin.routes.index', compact('routes'));
     }
 
     public function create()
     {
-        $drivers = Driver::whereHas('user')->with('user')->get();
+        $drivers = Driver::with('user')
+            ->where('estado', 'disponible')
+            ->get();
         $vehicles = Vehicle::where('estado', 'activo')->get();
         return view('admin.routes.create', compact('drivers', 'vehicles'));
     }
@@ -42,8 +44,13 @@ class RouteController extends Controller
 
     public function edit(Route $route)
     {
-        $drivers = Driver::whereHas('user')->with('user')->get();
-        $vehicles = Vehicle::where('estado', 'activo')->get();
+        $drivers = Driver::with('user')
+            ->where('estado', 'disponible')
+            ->orWhere('id', $route->driver_id)
+            ->get();
+        $vehicles = Vehicle::where('estado', 'activo')
+            ->orWhere('id', $route->vehicle_id)
+            ->get();
         return view('admin.routes.edit', compact('route', 'drivers', 'vehicles'));
     }
 

@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin routes
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\CheckRole::class . ':admin'])->prefix('admin')->name('admin.')->group(function () {
     // Vehicles
     Route::resource('vehicles', VehicleController::class);
     
@@ -33,4 +33,30 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     // Routes
     Route::resource('routes', RouteController::class);
+});
+
+// Rutas para conductores
+Route::middleware(['auth', \App\Http\Middleware\CheckRole::class . ':conductor'])->name('driver.')->prefix('driver')->group(function () {
+    Route::get('/routes', [App\Http\Controllers\Driver\RouteController::class, 'current'])->name('routes.current');
+    Route::get('/routes/history', [App\Http\Controllers\Driver\RouteController::class, 'history'])->name('routes.history');
+    Route::get('/routes/{route}', [App\Http\Controllers\Driver\RouteController::class, 'show'])->name('routes.show');
+    Route::put('/routes/{route}/status', [App\Http\Controllers\Driver\RouteController::class, 'updateStatus'])->name('routes.update-status');
+    
+    // Rutas de incidentes
+    Route::get('/incidents/create', [App\Http\Controllers\Driver\IncidentController::class, 'create'])->name('incidents.create');
+    Route::post('/incidents', [App\Http\Controllers\Driver\IncidentController::class, 'store'])->name('incidents.store');
+
+    // Rutas de combustible
+    Route::get('/fuel/create', [App\Http\Controllers\Driver\FuelController::class, 'create'])->name('fuel.create');
+    Route::post('/fuel', [App\Http\Controllers\Driver\FuelController::class, 'store'])->name('fuel.store');
+});
+
+// Rutas para clientes
+Route::middleware(['auth', \App\Http\Middleware\CheckRole::class . ':cliente'])->name('client.')->prefix('client')->group(function () {
+    Route::get('/orders', [App\Http\Controllers\Client\OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/create', [App\Http\Controllers\Client\OrderController::class, 'create'])->name('orders.create');
+    Route::post('/orders', [App\Http\Controllers\Client\OrderController::class, 'store'])->name('orders.store');
+    Route::get('/orders/{order}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('orders.show');
+    Route::get('/orders/track', [App\Http\Controllers\Client\OrderController::class, 'track'])->name('orders.track');
+    Route::get('/orders/history', [App\Http\Controllers\Client\OrderController::class, 'history'])->name('orders.history');
 });

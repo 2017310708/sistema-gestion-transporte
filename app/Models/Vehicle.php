@@ -18,6 +18,7 @@ class Vehicle extends Model
         'año',
         'capacidad',
         'estado',
+        'driver_id',
     ];
 
     // Relación con conductor

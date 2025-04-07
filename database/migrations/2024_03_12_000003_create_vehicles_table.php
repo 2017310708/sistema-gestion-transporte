@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('año');
             $table->decimal('capacidad', 8, 2);
             $table->enum('estado', ['activo', 'mantenimiento', 'inactivo'])->default('activo');
+            $table->foreignId('driver_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }
@@ -24,4 +25,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('vehicles');
     }
-};
+}; 

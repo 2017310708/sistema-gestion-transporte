@@ -20,12 +20,13 @@
                         <div class="ml-10 flex items-baseline space-x-4">
                             <a href="#" class="text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
                             @if($role === 'admin')
-                            <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Vehículos</a>
-                            <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Conductores</a>
-                            <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Rutas</a>
+                            <a href="{{ route('admin.vehicles.index') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Vehículos</a>
+                            <a href="{{ route('admin.drivers.index') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Conductores</a>
+                            <a href="{{ route('admin.routes.index') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Rutas</a>
                             @elseif($role === 'conductor')
-                            <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mis Rutas</a>
-                            <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mi Vehículo</a>
+                            <a href="{{ route('driver.routes.current') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mis Rutas</a>
+                            <a href="{{ route('driver.incidents.create') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Reportar Incidente</a>
+                            <a href="{{ route('driver.fuel.create') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Registrar Combustible</a>
                             @elseif($role === 'cliente')
                             <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mis Pedidos</a>
                             <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Nuevo Pedido</a>
@@ -153,7 +154,7 @@
                             <div class="ml-5 w-0 flex-1">
                                 <dl>
                                     <dt class="text-sm font-medium text-gray-500 truncate">Total Vehículos</dt>
-                                    <dd class="text-3xl font-semibold text-gray-900">{{ $totalVehiculos }}</dd>
+                                    <dd class="text-3xl font-semibold text-gray-900" title="Total de vehículos registrados">{{ number_format($totalVehiculos) }}</dd>
                                 </dl>
                             </div>
                         </div>
@@ -168,7 +169,7 @@
                             <div class="ml-5 w-0 flex-1">
                                 <dl>
                                     <dt class="text-sm font-medium text-gray-500 truncate">Total Conductores</dt>
-                                    <dd class="text-3xl font-semibold text-gray-900">{{ $totalConductores }}</dd>
+                                    <dd class="text-3xl font-semibold text-gray-900" title="Total de conductores activos">{{ number_format($totalConductores) }}</dd>
                                 </dl>
                             </div>
                         </div>
@@ -183,7 +184,7 @@
                             <div class="ml-5 w-0 flex-1">
                                 <dl>
                                     <dt class="text-sm font-medium text-gray-500 truncate">Total Rutas</dt>
-                                    <dd class="text-3xl font-semibold text-gray-900">{{ $totalRutas }}</dd>
+                                    <dd class="text-3xl font-semibold text-gray-900" title="Total de rutas registradas">{{ number_format($totalRutas) }}</dd>
                                 </dl>
                             </div>
                         </div>
@@ -203,6 +204,11 @@
                                     <dd class="text-3xl font-semibold text-gray-900">{{ $rutasAsignadas }}</dd>
                                 </dl>
                             </div>
+                        </div>
+                        <div class="mt-4">
+                            <a href="{{ route('driver.routes.current') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                                Ver rutas <span aria-hidden="true">&rarr;</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -225,7 +231,7 @@
                     <div class="p-5">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
-                                <i class="fas fa-box text-indigo-600 text-2xl"></i>
+                                <i class="fas fa-clock text-indigo-600 text-2xl"></i>
                             </div>
                             <div class="ml-5 w-0 flex-1">
                                 <dl>
@@ -233,6 +239,11 @@
                                     <dd class="text-3xl font-semibold text-gray-900">{{ $entregasPendientes }}</dd>
                                 </dl>
                             </div>
+                        </div>
+                        <div class="mt-4">
+                            <a href="{{ route('driver.routes.current') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                                Ver entregas <span aria-hidden="true">&rarr;</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -291,41 +302,41 @@
             <h2 class="text-lg font-medium text-gray-900 mb-4">Acciones Rápidas</h2>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 @if($role === 'admin')
-                    <a href="#" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
+                    <a href="{{ route('admin.vehicles.create') }}" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
                         <i class="fas fa-plus-circle text-indigo-600 text-xl mr-3"></i>
                         <span class="text-gray-700">Agregar Vehículo</span>
                     </a>
-                    <a href="#" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
+                    <a href="{{ route('admin.drivers.create') }}" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
                         <i class="fas fa-user-plus text-indigo-600 text-xl mr-3"></i>
                         <span class="text-gray-700">Registrar Conductor</span>
                     </a>
-                    <a href="#" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
+                    <a href="{{ route('admin.routes.create') }}" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
                         <i class="fas fa-map-marked-alt text-indigo-600 text-xl mr-3"></i>
                         <span class="text-gray-700">Crear Nueva Ruta</span>
                     </a>
                 @elseif($role === 'conductor')
-                    <a href="#" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
+                    <a href="{{ route('driver.routes.current') }}" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
                         <i class="fas fa-route text-indigo-600 text-xl mr-3"></i>
                         <span class="text-gray-700">Ver Ruta Actual</span>
                     </a>
-                    <a href="#" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
+                    <a href="{{ route('driver.incidents.create') }}" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
                         <i class="fas fa-clipboard-list text-indigo-600 text-xl mr-3"></i>
                         <span class="text-gray-700">Reportar Incidente</span>
                     </a>
-                    <a href="#" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
+                    <a href="{{ route('driver.fuel.create') }}" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
                         <i class="fas fa-gas-pump text-indigo-600 text-xl mr-3"></i>
                         <span class="text-gray-700">Registrar Combustible</span>
                     </a>
                 @elseif($role === 'cliente')
-                    <a href="#" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
+                    <a href="{{ route('client.orders.create') }}" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
                         <i class="fas fa-plus-circle text-indigo-600 text-xl mr-3"></i>
                         <span class="text-gray-700">Nuevo Pedido</span>
                     </a>
-                    <a href="#" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
+                    <a href="{{ route('client.orders.track') }}" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
                         <i class="fas fa-search text-indigo-600 text-xl mr-3"></i>
                         <span class="text-gray-700">Rastrear Pedido</span>
                     </a>
-                    <a href="#" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
+                    <a href="{{ route('client.orders.history') }}" class="bg-white p-6 rounded-lg shadow hover:shadow-md transition-shadow duration-300 flex items-center">
                         <i class="fas fa-history text-indigo-600 text-xl mr-3"></i>
                         <span class="text-gray-700">Historial de Pedidos</span>
                     </a>

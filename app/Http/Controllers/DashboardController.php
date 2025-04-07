@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Vehicle;
+use App\Models\User;
+use App\Models\Route;
+use App\Models\Order;
+use App\Models\Driver;
 
 class DashboardController extends Controller
 {
@@ -21,23 +26,34 @@ class DashboardController extends Controller
         // Datos específicos según el rol
         switch ($role) {
             case 'admin':
-                $data['totalVehiculos'] = 25; // Ejemplo, reemplazar con datos reales
-                $data['totalConductores'] = 30;
-                $data['totalRutas'] = 50;
+                $data['totalVehiculos'] = Vehicle::count();
+                $data['totalConductores'] = User::where('rol', 'conductor')->count();
+                $data['totalRutas'] = Route::count();
                 break;
             case 'conductor':
-                $data['rutasAsignadas'] = 5;
-                $data['vehiculoAsignado'] = 'ABC-123';
-                $data['entregasPendientes'] = 3;
+                $driver = Driver::where('user_id', $user->id)->first();
+                $data['rutasAsignadas'] = Route::where('driver_id', $driver->id)
+                    ->whereIn('estado', ['programada', 'en_curso'])
+                    ->count();
+                $data['vehiculoAsignado'] = Vehicle::where('driver_id', $driver->id)->value('placa') ?? 'No asignado';
+                $data['entregasPendientes'] = Route::where('driver_id', $driver->id)
+                    ->where('estado', 'programada')
+                    ->count();
                 break;
             case 'cliente':
-                $data['pedidosActivos'] = 2;
-                $data['ultimosPedidos'] = 5;
-                $data['rutasEnCurso'] = 1;
+                $data['pedidosActivos'] = Order::where('user_id', $user->id)
+                    ->whereIn('estado', ['pendiente', 'asignado', 'en_ruta'])
+                    ->count();
+                $data['ultimosPedidos'] = Order::where('user_id', $user->id)
+                    ->whereIn('estado', ['entregado', 'cancelado'])
+                    ->count();
+                $data['rutasEnCurso'] = Order::where('user_id', $user->id)
+                    ->where('estado', 'en_ruta')
+                    ->count();
                 break;
             default:
-                $data['tareasPendientes'] = 10;
-                $data['notificaciones'] = 5;
+                $data['tareasPendientes'] = 0;
+                $data['notificaciones'] = 0;
                 break;
         }
 

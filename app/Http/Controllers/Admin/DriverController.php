@@ -25,7 +25,8 @@ class DriverController extends Controller
     {
         $validated = $request->validate([
             'nombre' => 'required',
-            'apellido' => 'required',
+            'apellido_paterno' => 'required',
+            'apellido_materno' => 'required',
             'dni' => 'required|unique:drivers',
             'licencia' => 'required|unique:drivers',
             'telefono' => 'required',
@@ -35,7 +36,9 @@ class DriverController extends Controller
 
         // Crear usuario
         $user = User::create([
-            'name' => $validated['nombre'] . ' ' . $validated['apellido'],
+            'nombre' => $validated['nombre'],
+            'apellido_paterno' => $validated['apellido_paterno'],
+            'apellido_materno' => $validated['apellido_materno'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'rol' => 'conductor',
@@ -62,17 +65,21 @@ class DriverController extends Controller
     {
         $validated = $request->validate([
             'nombre' => 'required',
-            'apellido' => 'required',
+            'apellido_paterno' => 'required',
+            'apellido_materno' => 'required',
             'dni' => 'required|unique:drivers,dni,' . $driver->id,
             'licencia' => 'required|unique:drivers,licencia,' . $driver->id,
             'telefono' => 'required',
             'email' => 'required|email|unique:users,email,' . $driver->user_id,
             'password' => 'nullable|min:6',
+            'estado' => 'required|in:disponible,en_ruta,descanso',
         ]);
 
         // Actualizar usuario
         $user = $driver->user;
-        $user->name = $validated['nombre'] . ' ' . $validated['apellido'];
+        $user->nombre = $validated['nombre'];
+        $user->apellido_paterno = $validated['apellido_paterno'];
+        $user->apellido_materno = $validated['apellido_materno'];
         $user->email = $validated['email'];
         if (!empty($validated['password'])) {
             $user->password = Hash::make($validated['password']);
@@ -84,6 +91,7 @@ class DriverController extends Controller
             'dni' => $validated['dni'],
             'licencia' => $validated['licencia'],
             'telefono' => $validated['telefono'],
+            'estado' => $validated['estado'],
         ]);
 
         return redirect()->route('admin.drivers.index')->with('success', 'Conductor actualizado exitosamente');

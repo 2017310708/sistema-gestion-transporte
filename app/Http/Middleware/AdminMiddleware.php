@@ -6,17 +6,16 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckRole
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string  $role
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next)
     {
         if (!Auth::check()) {
             return redirect()->route('login')
@@ -25,7 +24,7 @@ class CheckRole
 
         $user = Auth::user();
         
-        if (!$user || $user->rol !== $role) {
+        if (!$user || $user->rol !== 'A') {
             return redirect()->route('dashboard')
                 ->with('error', 'No tienes permiso para acceder a esta sección.');
         }

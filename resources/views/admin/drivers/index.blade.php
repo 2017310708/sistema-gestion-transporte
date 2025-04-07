@@ -49,7 +49,9 @@
                         <tbody class="divide-y divide-gray-200 bg-white">
                             @foreach($drivers as $driver)
                             <tr>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $driver->user->name }}</td>
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                    {{ $driver->user->nombre }} {{ $driver->user->apellido_paterno }} {{ $driver->user->apellido_materno }}
+                                </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $driver->dni }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $driver->licencia }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $driver->telefono }}</td>
