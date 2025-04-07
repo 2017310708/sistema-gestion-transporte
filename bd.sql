@@ -5,8 +5,11 @@ CREATE TABLE usuarios (
     id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    rol ENUM('admin', 'cliente', 'conductor', 'personal') NOT NULL,
-    estado BOOLEAN DEFAULT true,
+    nombre VARCHAR(100),
+    apellido_paterno VARCHAR(100),
+    apellido_materno VARCHAR(100),
+    rol ENUM('A', 'C', 'D', 'S') NOT NULL,
+    estado ENUM('activo', 'inactivo', 'pendiente_confirmacion', 'bloqueado') DEFAULT 'pendiente_confirmacion',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -15,6 +18,8 @@ CREATE TABLE conductores (
     id INT PRIMARY KEY AUTO_INCREMENT,
     id_usuario INT,
     nombre VARCHAR(100) NOT NULL,
+    apellido_paterno VARCHAR(100) NOT NULL,
+    apellido_materno VARCHAR(100) NOT NULL,
     nro_licencia VARCHAR(20) NOT NULL UNIQUE,
     telefono VARCHAR(15) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -44,7 +49,7 @@ CREATE TABLE vehiculos (
     color VARCHAR(30) NOT NULL,
     tipo VARCHAR(50) NOT NULL,
     capacidad_carga DECIMAL(10,2) NOT NULL,
-    año INT NOT NULL,
+    year INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -64,7 +69,7 @@ CREATE TABLE cargas (
     descripcion TEXT NOT NULL,
     peso DECIMAL(10,2) NOT NULL,
     tipo_carga VARCHAR(50) NOT NULL,
-    estado ENUM('pendiente', 'en_transito', 'entregado', 'cancelado') NOT NULL,
+    estado ENUM('pendiente', 'en_transito', 'entregado', 'cancelado', 'devuelto') NOT NULL,
     id_ruta INT NOT NULL,
     id_vehiculo INT NOT NULL,
     id_conductor INT NOT NULL,
@@ -95,7 +100,7 @@ CREATE TABLE pedidos (
     fecha_recojo DATETIME NOT NULL,
     direccion_origen TEXT NOT NULL,
     direccion_destino TEXT NOT NULL,
-    estado ENUM('pendiente', 'aprobado', 'en_proceso', 'completado', 'cancelado') NOT NULL,
+    estado ENUM('pendiente_confirmacion', 'pendiente_pago', 'aprobado', 'en_proceso', 'en_ruta', 'completado', 'cancelado_cliente', 'cancelado_sistema') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (id_cliente) REFERENCES clientes(id)
@@ -121,7 +126,7 @@ CREATE TABLE mantenimientos (
     fecha_programada DATE NOT NULL,
     fecha_realizada DATE,
     costo DECIMAL(10,2) NOT NULL,
-    estado ENUM('pendiente', 'en_proceso', 'completado', 'cancelado') NOT NULL,
+    estado ENUM('pendiente_programacion', 'programado', 'en_proceso', 'esperando_repuestos', 'completado', 'cancelado', 'reprogramado') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (id_vehiculo) REFERENCES vehiculos(id)
@@ -135,7 +140,7 @@ CREATE TABLE incidentes (
     descripcion TEXT NOT NULL,
     fecha_incidente DATETIME NOT NULL,
     ubicacion TEXT NOT NULL,
-    estado ENUM('reportado', 'en_investigacion', 'resuelto') NOT NULL,
+    estado ENUM('reportado', 'en_investigacion', 'esperando_peritaje', 'en_proceso_legal', 'resuelto_conforme', 'resuelto_con_observaciones', 'archivado') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (id_vehiculo) REFERENCES vehiculos(id),
