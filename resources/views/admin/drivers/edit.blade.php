@@ -57,6 +57,14 @@
                         </div>
 
                         <div class="col-span-1">
+                            <label for="dni" class="block text-sm font-medium text-gray-700">DNI</label>
+                            <input type="text" name="dni" id="dni" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ old('dni', $driver->dni) }}" required>
+                            @error('dni')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="col-span-1">
                             <label for="licencia" class="block text-sm font-medium text-gray-700">Número de Licencia</label>
                             <input type="text" name="licencia" id="licencia" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ old('licencia', $driver->licencia) }}" required>
                             @error('licencia')

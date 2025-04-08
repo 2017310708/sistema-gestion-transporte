@@ -20,15 +20,17 @@
                         <div class="ml-10 flex items-baseline space-x-4">
                             <a href="#" class="text-white px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
                             @if($role === 'admin')
+                            <a href="{{ route('admin.users.index') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Usuarios</a>
                             <a href="{{ route('admin.vehicles.index') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Vehículos</a>
                             <a href="{{ route('admin.drivers.index') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Conductores</a>
                             <a href="{{ route('admin.routes.index') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Rutas</a>
+                            <a href="{{ route('admin.orders.index') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Pedidos</a>
                             @elseif($role === 'conductor')
                             <a href="{{ route('driver.routes.current') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mis Rutas</a>
                             <a href="{{ route('driver.incidents.create') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Reportar Incidente</a>
                             <a href="{{ route('driver.fuel.create') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Registrar Combustible</a>
                             @elseif($role === 'cliente')
-                            <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mis Pedidos</a>
+                            <a href="{{ route('client.orders.index') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mis Pedidos</a>
                             <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Nuevo Pedido</a>
                             @endif
                         </div>
@@ -41,7 +43,7 @@
                         </button>
                         <div class="ml-3 relative">
                             <div class="flex items-center">
-                                <span class="text-white mr-2">{{ $user->name }}</span>
+                                <span class="text-white mr-2">{{ $user->nombre }} {{ $user->apellido_paterno }} {{ $user->apellido_materno }}</span>
                                 <form action="{{ route('logout') }}" method="POST" class="inline">
                                     @csrf
                                     <button type="submit" class="text-gray-300 hover:text-white">
@@ -130,6 +132,48 @@
                             </div>
                             <div class="mt-4">
                                 <a href="{{ route('admin.routes.index') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-yellow-700 bg-yellow-100 hover:bg-yellow-200">
+                                    Administrar
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gestión de Pedidos -->
+                    <div class="bg-white overflow-hidden shadow rounded-lg">
+                        <div class="p-5">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 bg-purple-500 rounded-md p-3">
+                                    <i class="fas fa-box text-white text-2xl"></i>
+                                </div>
+                                <div class="ml-5">
+                                    <h3 class="text-lg font-medium text-gray-900">Pedidos</h3>
+                                    <p class="text-sm text-gray-500">Gestionar pedidos de clientes</p>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <a href="{{ route('admin.orders.index') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-purple-700 bg-purple-100 hover:bg-purple-200">
+                                    Administrar
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gestión de Usuarios -->
+                    <div class="bg-white overflow-hidden shadow rounded-lg">
+                        <div class="p-5">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 bg-blue-500 rounded-md p-3">
+                                    <i class="fas fa-users text-white text-2xl"></i>
+                                </div>
+                                <div class="ml-5">
+                                    <h3 class="text-lg font-medium text-gray-900">Usuarios</h3>
+                                    <p class="text-sm text-gray-500">Gestionar usuarios del sistema</p>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <a href="{{ route('admin.users.index') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200">
                                     Administrar
                                     <i class="fas fa-arrow-right ml-2"></i>
                                 </a>

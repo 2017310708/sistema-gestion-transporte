@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\RouteController;
+use App\Http\Controllers\Admin\OrderController;
 
 // Ruta de bienvenida
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
@@ -15,6 +17,12 @@ Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+    // Rutas de registro
+    Route::get('/register/client', [RegisterController::class, 'showClientRegistrationForm'])->name('register.client');
+    Route::post('/register/client', [RegisterController::class, 'registerClient'])->name('register.client');
+    Route::get('/register/driver', [RegisterController::class, 'showDriverRegistrationForm'])->name('register.driver');
+    Route::post('/register/driver', [RegisterController::class, 'registerDriver'])->name('register.driver');
 });
 
 // Rutas protegidas
@@ -25,6 +33,9 @@ Route::middleware('auth')->group(function () {
 
 // Admin routes
 Route::middleware(['auth', \App\Http\Middleware\CheckRole::class . ':admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Users
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    
     // Vehicles
     Route::resource('vehicles', VehicleController::class);
     
@@ -33,6 +44,9 @@ Route::middleware(['auth', \App\Http\Middleware\CheckRole::class . ':admin'])->p
     
     // Routes
     Route::resource('routes', RouteController::class);
+
+    // Orders
+    Route::resource('orders', OrderController::class);
 });
 
 // Rutas para conductores
@@ -55,8 +69,8 @@ Route::middleware(['auth', \App\Http\Middleware\CheckRole::class . ':conductor']
 Route::middleware(['auth', \App\Http\Middleware\CheckRole::class . ':cliente'])->name('client.')->prefix('client')->group(function () {
     Route::get('/orders', [App\Http\Controllers\Client\OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/create', [App\Http\Controllers\Client\OrderController::class, 'create'])->name('orders.create');
-    Route::post('/orders', [App\Http\Controllers\Client\OrderController::class, 'store'])->name('orders.store');
-    Route::get('/orders/{order}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('orders.show');
     Route::get('/orders/track', [App\Http\Controllers\Client\OrderController::class, 'track'])->name('orders.track');
     Route::get('/orders/history', [App\Http\Controllers\Client\OrderController::class, 'history'])->name('orders.history');
+    Route::post('/orders', [App\Http\Controllers\Client\OrderController::class, 'store'])->name('orders.store');
+    Route::get('/orders/{order}', [App\Http\Controllers\Client\OrderController::class, 'show'])->name('orders.show');
 });

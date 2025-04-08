@@ -49,8 +49,8 @@
                         </div>
 
                         <div class="col-span-1">
-                            <label for="anio" class="block text-sm font-medium text-gray-700">Año</label>
-                            <input type="number" name="anio" id="anio" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ old('anio', $vehicle->anio) }}" required>
+                            <label for="año" class="block text-sm font-medium text-gray-700">Año</label>
+                            <input type="number" name="año" id="año" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ old('año', $vehicle->año) }}" required>
                             @error('anio')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                             @enderror

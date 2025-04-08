@@ -60,8 +60,8 @@
                             <select name="driver_id" id="driver_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                                 <option value="">Seleccione un conductor</option>
                                 @foreach($drivers as $driver)
-                                <option value="{{ $driver['id'] }}" {{ old('driver_id') == $driver['id'] ? 'selected' : '' }}>
-                                    {{ $driver['nombre_completo'] }} - {{ $driver['licencia'] }}
+                                <option value="{{ $driver->id }}" {{ old('driver_id') == $driver->id ? 'selected' : '' }}>
+                                    {{ $driver->user->nombre }} {{ $driver->user->apellido_paterno }} {{ $driver->user->apellido_materno }} - {{ $driver->licencia }}
                                 </option>
                                 @endforeach
                             </select>

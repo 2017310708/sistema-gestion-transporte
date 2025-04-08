@@ -21,9 +21,8 @@
                             <a href="{{ url('/dashboard') }}" class="hover:text-gray-200">Dashboard</a>
                         @else
                             <a href="{{ route('login') }}" class="hover:text-gray-200">Iniciar Sesión</a>
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="hover:text-gray-200">Registrarse</a>
-                            @endif
+                            <a href="{{ route('register.client') }}" class="hover:text-gray-200">Registrarse como Cliente</a>
+                            <a href="{{ route('register.driver') }}" class="hover:text-gray-200">Registrarse como Conductor</a>
                         @endauth
                     </div>
                 @endif
@@ -37,10 +36,18 @@
             <p class="mt-6 text-xl text-indigo-100 max-w-3xl">
                 Optimiza tus operaciones de transporte con nuestra plataforma integral. Gestiona flotas, rutas y personal de manera eficiente.
             </p>
-            <div class="mt-10">
+            <div class="mt-10 space-x-4">
                 <a href="{{ route('login') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-white hover:bg-indigo-50">
-                    Comenzar ahora
-                    <i class="fas fa-arrow-right ml-3"></i>
+                    Iniciar Sesión
+                    <i class="fas fa-sign-in-alt ml-3"></i>
+                </a>
+                <a href="{{ route('register.client') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600">
+                    Registrarse como Cliente
+                    <i class="fas fa-user-plus ml-3"></i>
+                </a>
+                <a href="{{ route('register.driver') }}" class="inline-flex items-center px-6 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-indigo-700">
+                    Registrarse como Conductor
+                    <i class="fas fa-truck ml-3"></i>
                 </a>
             </div>
         </div>

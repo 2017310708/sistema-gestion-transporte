@@ -24,19 +24,31 @@
 
                     @auth
                         <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                            <a href="{{ route('dashboard') }}" class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            <a href="{{ route('dashboard') }}" 
+                               class="{{ request()->routeIs('dashboard') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                 Dashboard
                             </a>
 
                             @if(Auth::user()->rol === 'admin')
-                                <a href="{{ route('admin.vehicles.index') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                                <a href="{{ route('admin.users.index') }}" 
+                                   class="{{ request()->routeIs('admin.users.*') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                                    <i class="fas fa-users-cog mr-2"></i> Usuarios
+                                </a>
+                                <a href="{{ route('admin.vehicles.index') }}" 
+                                   class="{{ request()->routeIs('admin.vehicles.*') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                     <i class="fas fa-truck mr-2"></i> Vehículos
                                 </a>
-                                <a href="{{ route('admin.drivers.index') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                                <a href="{{ route('admin.drivers.index') }}" 
+                                   class="{{ request()->routeIs('admin.drivers.*') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                     <i class="fas fa-users mr-2"></i> Conductores
                                 </a>
-                                <a href="{{ route('admin.routes.index') }}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                                <a href="{{ route('admin.routes.index') }}" 
+                                   class="{{ request()->routeIs('admin.routes.*') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                                     <i class="fas fa-route mr-2"></i> Rutas
+                                </a>
+                                <a href="{{ route('admin.orders.index') }}" 
+                                   class="{{ request()->routeIs('admin.orders.*') ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                                    <i class="fas fa-shopping-cart mr-2"></i> Pedidos
                                 </a>
                             @endif
                         </div>
@@ -73,18 +85,26 @@
         <div class="sm:hidden hidden" id="mobile-menu">
             <div class="pt-2 pb-3 space-y-1">
                 @auth
-                    <a href="{{ route('dashboard') }}" class="bg-indigo-50 border-indigo-500 text-indigo-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                    <a href="{{ route('dashboard') }}" 
+                       class="{{ request()->routeIs('dashboard') ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700' }} block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                         Dashboard
                     </a>
 
                     @if(Auth::user()->rol === 'admin')
-                        <a href="{{ route('admin.vehicles.index') }}" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                        <a href="{{ route('admin.users.index') }}" 
+                           class="{{ request()->routeIs('admin.users.*') ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700' }} block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                            <i class="fas fa-users-cog mr-2"></i> Usuarios
+                        </a>
+                        <a href="{{ route('admin.vehicles.index') }}" 
+                           class="{{ request()->routeIs('admin.vehicles.*') ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700' }} block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                             <i class="fas fa-truck mr-2"></i> Vehículos
                         </a>
-                        <a href="{{ route('admin.drivers.index') }}" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                        <a href="{{ route('admin.drivers.index') }}" 
+                           class="{{ request()->routeIs('admin.drivers.*') ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700' }} block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                             <i class="fas fa-users mr-2"></i> Conductores
                         </a>
-                        <a href="{{ route('admin.routes.index') }}" class="border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
+                        <a href="{{ route('admin.routes.index') }}" 
+                           class="{{ request()->routeIs('admin.routes.*') ? 'bg-indigo-50 border-indigo-500 text-indigo-700' : 'border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700' }} block pl-3 pr-4 py-2 border-l-4 text-base font-medium">
                             <i class="fas fa-route mr-2"></i> Rutas
                         </a>
                     @endif

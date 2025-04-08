@@ -19,8 +19,13 @@
                     Iniciar Sesión
                 </h2>
                 <p class="mt-2 text-sm text-gray-600">
-                    O <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
-                        regístrate si aún no tienes una cuenta
+                    O regístrate como 
+                    <a href="{{ route('register.client') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                        cliente
+                    </a>
+                    o
+                    <a href="{{ route('register.driver') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
+                        conductor
                     </a>
                 </p>
             </div>
