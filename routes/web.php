@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\RouteController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Auth\PasswordResetController;
 
 // Ruta de bienvenida
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
@@ -23,6 +24,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/register/client', [RegisterController::class, 'registerClient'])->name('register.client');
     Route::get('/register/driver', [RegisterController::class, 'showDriverRegistrationForm'])->name('register.driver');
     Route::post('/register/driver', [RegisterController::class, 'registerDriver'])->name('register.driver');
+
+    // Rutas de restablecimiento de contraseña
+    Route::get('/password/reset', [PasswordResetController::class, 'showResetForm'])->name('password.request');
+    Route::post('/password/verify', [PasswordResetController::class, 'verifyIdentity'])->name('password.verify');
+    Route::get('/password/reset/{token}', [PasswordResetController::class, 'showResetPasswordForm'])->name('password.reset.form');
+    Route::post('/password/reset', [PasswordResetController::class, 'resetPassword'])->name('password.reset');
 });
 
 // Rutas protegidas

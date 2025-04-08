@@ -31,7 +31,7 @@
                             <a href="{{ route('driver.fuel.create') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Registrar Combustible</a>
                             @elseif($role === 'cliente')
                             <a href="{{ route('client.orders.index') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mis Pedidos</a>
-                            <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Nuevo Pedido</a>
+                            <a href="{{ route('client.orders.create') }}" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Nuevo Pedido</a>
                             @endif
                         </div>
                     </div>

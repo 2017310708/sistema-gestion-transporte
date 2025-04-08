@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - Sistema de Gestión de Transporte</title>
+    <title>Nueva Contraseña - Sistema de Gestión de Transporte</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -16,17 +16,10 @@
                     <span class="text-2xl font-bold text-gray-900">GesTran</span>
                 </a>
                 <h2 class="text-3xl font-extrabold text-gray-900">
-                    Iniciar Sesión
+                    Establecer Nueva Contraseña
                 </h2>
                 <p class="mt-2 text-sm text-gray-600">
-                    O regístrate como 
-                    <a href="{{ route('register.client') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
-                        cliente
-                    </a>
-                    o
-                    <a href="{{ route('register.driver') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
-                        conductor
-                    </a>
+                    Por favor, ingresa tu nueva contraseña.
                 </p>
             </div>
 
@@ -45,41 +38,27 @@
             </div>
             @endif
 
-            <form class="mt-8 space-y-6" action="{{ route('login') }}" method="POST">
+            <form class="mt-8 space-y-6" action="{{ route('password.reset') }}" method="POST">
                 @csrf
+                <input type="hidden" name="token" value="{{ $token }}">
+                <input type="hidden" name="email" value="{{ $email }}">
+
                 <div class="rounded-md shadow-sm space-y-4">
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700">
-                            Correo Electrónico
-                        </label>
-                        <input id="email" name="email" type="email" required 
-                            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                            placeholder="ejemplo@correo.com"
-                            value="{{ old('email') }}">
-                    </div>
-                    <div>
                         <label for="password" class="block text-sm font-medium text-gray-700">
-                            Contraseña
+                            Nueva Contraseña
                         </label>
                         <input id="password" name="password" type="password" required
                             class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                             placeholder="••••••••">
                     </div>
-                </div>
-
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <input id="remember_me" name="remember" type="checkbox"
-                            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="remember_me" class="ml-2 block text-sm text-gray-900">
-                            Recordarme
+                    <div>
+                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700">
+                            Confirmar Nueva Contraseña
                         </label>
-                    </div>
-
-                    <div class="text-sm">
-                        <a href="{{ route('password.request') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
-                            ¿Olvidaste tu contraseña?
-                        </a>
+                        <input id="password_confirmation" name="password_confirmation" type="password" required
+                            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="••••••••">
                     </div>
                 </div>
 
@@ -89,11 +68,11 @@
                         <span class="absolute left-0 inset-y-0 flex items-center pl-3">
                             <i class="fas fa-lock text-indigo-500 group-hover:text-indigo-400"></i>
                         </span>
-                        Iniciar Sesión
+                        Establecer Nueva Contraseña
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </body>
-</html>
+</html> 
